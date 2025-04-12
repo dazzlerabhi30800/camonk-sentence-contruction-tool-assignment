@@ -17,6 +17,8 @@
   --color-gray-1: #414343;
   --color-gray-2: #7c8181;
   --color-gray-3: #dfe3e3;
+  --color-gray-4: #616464;
+  --color-gray-5: #bfc6c6;
   --color-black-1: #0f1010;
   --color-black-2: #2a2d2d;
   --color-primary-blue: #453fe1;
@@ -24,6 +26,7 @@
 
   /* font style */
   --text-h1: 40px;
+  --text-p: 24px;
   --text-p1: 20px;
   --text-p2: 18px;
   --text-p3: 16px;
