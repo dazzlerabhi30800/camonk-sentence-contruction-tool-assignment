@@ -19,7 +19,7 @@ const Button = ({
     <button
       style={{ width: width ?? 140, height: height ?? 42 }}
       onClick={onClick}
-      className={`rounded-lg text-p2  ${
+      className={`rounded-lg text-p3  ${
         variant === "outline"
           ? "border-1 text-primary-blue border-primary-blue bg-transparent"
           : "border-1 text-white  border-transparent bg-primary-blue"

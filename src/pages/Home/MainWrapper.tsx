@@ -10,7 +10,7 @@ const MainWrapper = () => {
           <h1 className="text-h1 text-black-1 font-semibold">
             Sentence Construction
           </h1>
-          <p className="text-p1 text-gray-2">
+          <p className="text-p1 max-w-3xl text-gray-2">
             Select the correct words to complete the sentence by arranging the
             provided options in the right order.
           </p>

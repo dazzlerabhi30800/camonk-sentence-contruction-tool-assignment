@@ -2,19 +2,19 @@ const Details = () => {
   const detailData = [
     {
       title: "Time Per Question",
-      text: <p className="text-gray-2 text-small">30 sec</p>,
+      text: <p className="text-gray-2 text-p2">30 sec</p>,
       textClass: "",
     },
 
     {
       title: "Total Question",
-      text: <p className="text-gray-2 text-small">10</p>,
+      text: <p className="text-gray-2 text-p2">10</p>,
     },
 
     {
-      title: "Time Per Question",
+      title: "Coins",
       text: (
-        <p className="flex items-end gap-1 text-gray-1 text-p2">
+        <p className="flex items-end gap-1 text-gray-1 text-p3">
           <span className="w-6 h-6 rounded-[50%] border-3 border-yellow-400 bg-yellow-500"></span>
           0
         </p>
