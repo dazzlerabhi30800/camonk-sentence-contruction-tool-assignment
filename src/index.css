@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
 @layer base {
@@ -5,5 +6,29 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Inter", sans-serif;
   }
+  button {
+    cursor: pointer;
+  }
+}
+
+@theme {
+  --color-gray-1: #414343;
+  --color-gray-2: #7c8181;
+  --color-gray-3: #dfe3e3;
+  --color-black-1: #0f1010;
+  --color-black-2: #2a2d2d;
+  --color-primary-blue: #453fe1;
+  --color-yellow: #f2a531;
+
+  /* font style */
+  --text-h1: 40px;
+  --text-p1: 20px;
+  --text-small: 18px;
+  --text-p2: 16px;
+}
+
+main {
+  min-height: 100vh;
 }
