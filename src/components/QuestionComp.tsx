@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useStoreContext } from "../lib/Store";
 import Button from "./Button";
 import SentenceDisplay from "./SentenceDisplay";
+import { formatTime } from "../utils/formatTime";
 
 const QuestionComp = () => {
   const {
@@ -9,9 +10,11 @@ const QuestionComp = () => {
     currQuestion,
     handleIndex,
     setSubmitData,
-    submitData,
+    setCurrQuestion,
+    questions,
   } = useStoreContext();
   const [selectOptions, setSelectOptions] = useState<string[]>([]);
+  const [time, setTime] = useState(30);
   const handleBlank = (option: string) => {
     setSelectOptions((prev) => prev.filter((item) => item !== option));
   };
@@ -19,6 +22,16 @@ const QuestionComp = () => {
   const checkArray = (arr1: string[], arr2: string[]) => {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
   };
+
+  useEffect(() => {
+    if (currIndex >= questions.length) {
+      return;
+    }
+    if (currIndex > 0) {
+      setTime(10);
+    }
+    setCurrQuestion(questions[currIndex]);
+  }, [currIndex]);
 
   const handleNext = () => {
     const isCorrect = checkArray(currQuestion.correctAnswer, selectOptions);
@@ -35,7 +48,22 @@ const QuestionComp = () => {
     setSelectOptions([]);
     handleIndex();
   };
-  console.log(submitData);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      let currTime = time;
+      if (currTime <= 0) {
+        clearInterval(interval);
+        handleNext();
+        return;
+      }
+      currTime--;
+      setTime(currTime);
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [time]);
 
   return (
     <div className="flex-1 flex flex-col gap-14 max-w-3xl bg-white shadow-md p-10 rounded-3xl">
@@ -43,7 +71,7 @@ const QuestionComp = () => {
       <div className="flex flex-col gap-8">
         {/* Time & Quit Button */}
         <div className="flex items-center justify-between">
-          <p className="text-gray-4 font-semibold text-p">0:18</p>
+          <p className="text-gray-4 font-semibold text-p">{formatTime(time)}</p>
           <Button
             className="text-gray-1 text-p2 border-gray-3"
             width={76}

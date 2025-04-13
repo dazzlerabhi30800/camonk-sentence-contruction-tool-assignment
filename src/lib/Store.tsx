@@ -9,6 +9,7 @@ interface context {
   submitData: submit[];
   setSubmitData: React.Dispatch<React.SetStateAction<Array<submit>>>;
   handleIndex: () => void;
+  questions: question[];
 }
 
 const StoreContext = createContext<context | null>(null);
@@ -24,9 +25,6 @@ export default function StoreContextProvider({
   const [index, setIndex] = useState(0);
   const [currQuestion, setCurrQuestion] = useState(questions[index]);
   const [submitData, setSubmitData] = useState<submit[]>([]);
-  useEffect(() => {
-    setCurrQuestion(questions[index]);
-  }, [index]);
 
   const handleIndex = () => {
     setIndex((prev) => Math.floor((prev + 1) % questions.length));
@@ -42,6 +40,7 @@ export default function StoreContextProvider({
         handleIndex,
         submitData,
         setSubmitData,
+        questions,
       }}
     >
       {children}
