@@ -1,8 +1,14 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import db from "../../api/db.json";
 
 interface context {
   index: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
+  currQuestion: question;
+  setCurrQuestion: React.Dispatch<React.SetStateAction<question>>;
+  submitData: submit[];
+  setSubmitData: React.Dispatch<React.SetStateAction<Array<submit>>>;
+  handleIndex: () => void;
 }
 
 const StoreContext = createContext<context | null>(null);
@@ -12,9 +18,32 @@ export default function StoreContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [index, setIndex] = useState(4);
+  const {
+    data: { questions },
+  } = db;
+  const [index, setIndex] = useState(0);
+  const [currQuestion, setCurrQuestion] = useState(questions[index]);
+  const [submitData, setSubmitData] = useState<submit[]>([]);
+  useEffect(() => {
+    setCurrQuestion(questions[index]);
+  }, [index]);
+
+  const handleIndex = () => {
+    setIndex((prev) => Math.floor((prev + 1) % questions.length));
+  };
+
   return (
-    <StoreContext.Provider value={{ index, setIndex }}>
+    <StoreContext.Provider
+      value={{
+        index,
+        setIndex,
+        currQuestion,
+        setCurrQuestion,
+        handleIndex,
+        submitData,
+        setSubmitData,
+      }}
+    >
       {children}
     </StoreContext.Provider>
   );

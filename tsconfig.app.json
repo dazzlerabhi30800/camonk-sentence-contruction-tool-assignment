@@ -12,6 +12,8 @@
     "skipLibCheck": true,
     /* Bundler mode */
     // "moduleResolution": "bundler",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -24,7 +26,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     // new files
-    "moduleResolution": "node",
     "esModuleInterop": true
   },
   "include": [

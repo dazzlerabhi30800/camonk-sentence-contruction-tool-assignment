@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { useStoreContext } from "../lib/Store";
 import Button from "./Button";
+import SentenceDisplay from "./SentenceDisplay";
 
 const QuestionComp = () => {
-  const { index: currIndex } = useStoreContext();
-  const options = ["Captivating", "Eclectic", "Garnering", "Blended"];
+  const { index: currIndex, currQuestion, handleIndex } = useStoreContext();
+  const [selectOptions, setSelectOptions] = useState<string[]>([]);
+  const handleBlank = (option: string) => {
+    setSelectOptions((prev) => prev.filter((item) => item !== option));
+  };
   return (
     <div className="flex-1 flex flex-col gap-14 max-w-3xl bg-white shadow-md p-10 rounded-3xl">
       {/* Timer Wrapper & Tracker */}
@@ -26,7 +31,9 @@ const QuestionComp = () => {
             .fill(0)
             .map((_, index) => (
               <span
-                className={`h-1 w-full ${currIndex >= index ? "bg-yellow" : "bg-gray-3"} rounded-[10px]`}
+                className={`h-1 w-full ${
+                  currIndex >= index ? "bg-yellow" : "bg-gray-3"
+                } rounded-[10px]`}
                 key={index}
               ></span>
             ))}
@@ -36,37 +43,49 @@ const QuestionComp = () => {
       <div className="flex flex-col gap-10">
         {/* Sentence with options */}
         <div className="flex flex-col gap-10">
-          {/* Sentence */}
+          {/* sentence */}
           <div className="flex px-[42px] flex-col gap-16">
             <p className="text-gray-4 text-center text-p1">
               Select the missing words in correct order
             </p>
-            <h1 className="text-p text-black-2 font-medium leading-[1.8]">
-              The _____________ musical performance _____________ elements from
-              various genres, _____________ the audience with its unique sound
-              and _____________ critical acclaim from industry experts.
-            </h1>
+            <SentenceDisplay
+              selectedWords={selectOptions}
+              template={currQuestion.question}
+              handleBlank={handleBlank}
+              optionLength={currQuestion.options.length}
+            />
+            {/* <h1 className="text-p text-black-2 font-medium leading-[1.8]">
+              {currQuestion.question}
+            </h1> */}
           </div>
           {/* Options */}
           <div className="flex justify-center gap-4">
-            {options?.map((option, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className="border-gray-5 text-p3 text-gray-1"
-                width={"fit-content"}
-                height={38}
-              >
-                {option}
-              </Button>
-            ))}
+            {currQuestion.options?.map(
+              (option, index) =>
+                !selectOptions.includes(option) && (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    className="border-gray-5 text-p3 text-gray-1"
+                    onClick={() =>
+                      setSelectOptions((prev) => [...prev, option])
+                    }
+                    width={"fit-content"}
+                    height={38}
+                  >
+                    {option}
+                  </Button>
+                )
+            )}
           </div>
         </div>
         {/* Next Button */}
         <Button
           variant="outline"
           className="border-gray-3 text-p2 text-gray-3 self-end"
+          disabled={currIndex === 9}
           width={"fit-content"}
+          onClick={() => handleIndex()}
           height={64}
         >
           Next

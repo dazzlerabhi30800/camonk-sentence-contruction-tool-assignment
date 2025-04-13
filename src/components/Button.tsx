@@ -6,6 +6,7 @@ interface buttonProps {
   height?: number | string;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -15,13 +16,15 @@ const Button = ({
   height,
   className,
   onClick,
+  disabled,
 }: buttonProps) => {
   return (
     <button
       style={{ width: width ?? 140, height: height ?? 42 }}
       onClick={onClick}
+      disabled={disabled}
       className={twMerge(
-        "px-4 py-2 rounded border-1 hover:opacity-70 transition duration-300 linear",
+        "px-4 py-2 rounded border-1 hover:opacity-70 transition duration-300 linear disabled:cursor-not-allowed disabled:opacity-80",
         variant === "outline"
           ? " text-primary-blue border-primary-blue bg-transparent"
           : "text-white  border-transparent bg-primary-blue",
