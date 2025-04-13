@@ -24,8 +24,16 @@
             "dest": "/api/server.ts"
         },
         {
+            "src": "/assets/(.*)",
+            "dest": "/dist/assets/$1"
+        },
+        {
+            "src": "/(.*)\\.(js|css|png|jpg|ico|svg|woff|woff2|ttf|eot)",
+            "dest": "/dist/$1.$2"
+        },
+        {
             "src": "/(.*)",
-            "dest": "/index.html"
+            "dest": "/dist/index.html"
         }
     ]
 }

@@ -6,7 +6,7 @@ import Questions from "./pages/Questions/Questions";
 import { useEffect } from "react";
 
 function App() {
-  const api_url = import.meta.env.VITE_API_URL || window.origin + "/api";
+  const api_url = import.meta.env.VITE_API_URL || "/api";
   useEffect(() => {
     fetch(api_url + "/data")
       .then((data) => data.json())
