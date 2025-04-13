@@ -29,6 +29,11 @@
   },
   "include": [
     "src",
-    "api"
+    "functions"
+    // "api"
   ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
 }
