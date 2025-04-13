@@ -1,59 +1,27 @@
-import { create, router as jsonRouter, defaults } from "json-server";
-import type { Request, Response, NextFunction } from "express";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import path from "path";
 import fs from "fs";
+import path from "path";
 
-// Initialize JSON Server
-const server = create();
-const middlewares = defaults();
-
-// Resolve db.json path
-const dbPath = path.resolve(__dirname, "db.json");
-
-// Check if db.json exists
-if (!fs.existsSync(dbPath)) {
-  console.error("db.json not found at:", dbPath);
-  throw new Error("db.json is missing");
-}
-
-// Initialize JSON Server router
-const router = jsonRouter(dbPath);
-
-// Apply middlewares
-server.use(middlewares);
-
-// Rewrite /api/* to /* for JSON Server
-server.use((req: Request, _res: Response, next: NextFunction) => {
-  if (req.path.startsWith("/api")) {
-    req.url = req.url.replace(/^\/api/, "") || "/";
-  }
-  next();
-});
-
-// Error handling middleware
-server.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-  console.error("Server error:", err);
-  res.status(500).json({ error: "Internal server error" });
-});
-
-// Apply JSON Server router
-server.use(router);
-
-// Vercel serverless function handler
+// Simple handler to test ESM and db.json
 export default async (
   req: VercelRequest,
   res: VercelResponse
 ): Promise<void> => {
   try {
-    await new Promise<void>((resolve, reject) => {
-      server(req as any, res as any, (err: any) => {
-        if (err) reject(err);
-        else resolve();
-      });
-    });
+    const dbPath = path.resolve(__dirname, "db.json");
+    if (!fs.existsSync(dbPath)) {
+      throw new Error("db.json not found");
+    }
+    const db = JSON.parse(fs.readFileSync(dbPath, "utf-8"));
+
+    // Simulate /api/data endpoint
+    if (req.url?.startsWith("/api/data")) {
+      res.status(200).json(db.data || []);
+    } else {
+      res.status(404).json({ error: "Endpoint not found" });
+    }
   } catch (error) {
-    console.error("Handler error:", error);
+    console.error("Error:", error);
     res.status(500).json({ error: "Serverless function failed" });
   }
 };
