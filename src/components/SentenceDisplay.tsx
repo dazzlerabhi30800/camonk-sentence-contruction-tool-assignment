@@ -23,7 +23,7 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
   const parts = template.split(blankRegex).flatMap((part, index) => {
     // After each text part (except the last), insert a blank or word
     const result = [
-      <span className="leading-[2.1]" key={`text-${index}`}>
+      <span className="leading-[2.8] leading-[2.1]" key={`text-${index}`}>
         {part}
       </span>,
     ];
@@ -33,7 +33,7 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
         <span
           key={`blank-${index}`}
           className={twMerge(
-            "mx-2 leading-[2.1]",
+            "mx-2 leading-[2.8] md:leading-[2.1]",
             word
               ? "border-b-2 border-gray-2 pb-2 font-semibold px-2"
               : "text-gray-400"
@@ -43,9 +43,7 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
             <Button
               variant="outline"
               onClick={() => handleBlank(word)}
-              className="text-xs border-gray-5 p-1 text-gray-1"
-              height="fit-content"
-              width="fit-content"
+              className="text-xs border-gray-5 p-1 text-gray-1 h-fit w-fit"
             >
               {word}
             </Button>
@@ -59,7 +57,9 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
     return result;
   });
 
-  return <div className={twMerge("text-lg", className)}>{parts}</div>;
+  return (
+    <div className={twMerge("text-sm md:text-lg", className)}>{parts}</div>
+  );
 };
 
 export default SentenceDisplay;

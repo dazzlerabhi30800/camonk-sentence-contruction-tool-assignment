@@ -3,6 +3,7 @@ import { useStoreContext } from "../lib/Store";
 import Button from "./Button";
 import SentenceDisplay from "./SentenceDisplay";
 import { formatTime } from "../utils/formatTime";
+import { useNavigate } from "react-router-dom";
 
 const QuestionComp = () => {
   const {
@@ -23,8 +24,10 @@ const QuestionComp = () => {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
   };
 
+  const navigate = useNavigate();
   useEffect(() => {
     if (currIndex >= questions.length) {
+      navigate("/");
       return;
     }
     if (currIndex > 0) {
@@ -66,16 +69,14 @@ const QuestionComp = () => {
   }, [time]);
 
   return (
-    <div className="flex-1 flex flex-col gap-14 max-w-3xl bg-white shadow-md p-10 rounded-3xl">
+    <div className="flex-1 flex flex-col gap-14 w-full max-w-3xl bg-transparent   md:bg-white md:shadow-md p-5 md:p-10 rounded-3xl">
       {/* Timer Wrapper & Tracker */}
       <div className="flex flex-col gap-8">
         {/* Time & Quit Button */}
         <div className="flex items-center justify-between">
           <p className="text-gray-4 font-semibold text-p">{formatTime(time)}</p>
           <Button
-            className="text-gray-1 text-p2 border-gray-3"
-            width={76}
-            height={44}
+            className="text-gray-1 text-p2 border-gray-3 w-[76px] h-11"
             variant="outline"
           >
             Quit
@@ -100,8 +101,8 @@ const QuestionComp = () => {
         {/* Sentence with options */}
         <div className="flex flex-col gap-10">
           {/* sentence */}
-          <div className="flex px-[42px] flex-col gap-16">
-            <p className="text-gray-4 text-center text-p1">
+          <div className="flex px-5 md:px-[42px] flex-col gap-16">
+            <p className="text-gray-4 text-center md:text-p1">
               Select the missing words in correct order
             </p>
             <SentenceDisplay
@@ -110,24 +111,19 @@ const QuestionComp = () => {
               handleBlank={handleBlank}
               optionLength={currQuestion.options.length}
             />
-            {/* <h1 className="text-p text-black-2 font-medium leading-[1.8]">
-              {currQuestion.question}
-            </h1> */}
           </div>
           {/* Options */}
-          <div className="flex justify-center h-11 gap-4">
+          <div className="flex flex-wrap justify-center h-11 gap-4">
             {currQuestion.options?.map(
               (option, index) =>
                 !selectOptions.includes(option) && (
                   <Button
                     key={index}
                     variant="outline"
-                    className="border-gray-5 text-p3 text-gray-1"
+                    className="border-gray-5 text-[10px] h-fit w-fit md:h-auto md:w-auto md:text-p3 text-gray-1 w-fit h-[38px]"
                     onClick={() =>
                       setSelectOptions((prev) => [...prev, option])
                     }
-                    width={"fit-content"}
-                    height={38}
                   >
                     {option}
                   </Button>
@@ -138,15 +134,13 @@ const QuestionComp = () => {
         {/* Next Button */}
         <Button
           variant="outline"
-          className="border-gray-3 text-p2 text-gray-3 self-end"
+          className="border-gray-2 md:border-gray-3 text-p2 mt-5 md:mt-0 textg-gray-2 md:text-gray-3 self-end h-16 w-fit"
           disabled={
             currIndex === 9 ||
             selectOptions.length !== currQuestion.options.length
           }
-          width={"fit-content"}
           // onClick={() => handleIndex()}
           onClick={handleNext}
-          height={64}
         >
           Next
         </Button>

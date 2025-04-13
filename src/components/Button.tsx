@@ -2,8 +2,6 @@ import { twMerge } from "tailwind-merge";
 interface buttonProps {
   variant: "outline" | "default";
   children: React.ReactNode;
-  width?: number | string;
-  height?: number | string;
   className?: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -12,19 +10,16 @@ interface buttonProps {
 const Button = ({
   variant = "default",
   children,
-  width,
-  height,
   className,
   onClick,
   disabled,
 }: buttonProps) => {
   return (
     <button
-      style={{ width: width ?? 140, height: height ?? 42 }}
       onClick={onClick}
       disabled={disabled}
       className={twMerge(
-        "px-4 py-2 rounded border-1 hover:opacity-70 transition duration-300 linear disabled:cursor-not-allowed disabled:opacity-80",
+        "px-4 py-2 rounded border-1 hover:opacity-70 transition duration-300 linear disabled:cursor-not-allowed disabled:opacity-90",
         variant === "outline"
           ? " text-primary-blue border-primary-blue bg-transparent"
           : "text-white  border-transparent bg-primary-blue",

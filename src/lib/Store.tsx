@@ -27,7 +27,8 @@ export default function StoreContextProvider({
   const [submitData, setSubmitData] = useState<submit[]>([]);
 
   const handleIndex = () => {
-    setIndex((prev) => Math.floor((prev + 1) % questions.length));
+    // setIndex((prev) => Math.floor((prev + 1) % questions.length));
+    setIndex((prev) => prev + 1);
   };
 
   return (
