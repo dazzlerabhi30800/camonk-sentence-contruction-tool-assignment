@@ -4,11 +4,39 @@ import Button from "./Button";
 import SentenceDisplay from "./SentenceDisplay";
 
 const QuestionComp = () => {
-  const { index: currIndex, currQuestion, handleIndex } = useStoreContext();
+  const {
+    index: currIndex,
+    currQuestion,
+    handleIndex,
+    setSubmitData,
+    submitData,
+  } = useStoreContext();
   const [selectOptions, setSelectOptions] = useState<string[]>([]);
   const handleBlank = (option: string) => {
     setSelectOptions((prev) => prev.filter((item) => item !== option));
   };
+
+  const checkArray = (arr1: string[], arr2: string[]) => {
+    return JSON.stringify(arr1) === JSON.stringify(arr2);
+  };
+
+  const handleNext = () => {
+    const isCorrect = checkArray(currQuestion.correctAnswer, selectOptions);
+    setSubmitData((prev) => [
+      ...prev,
+      {
+        isCorrect,
+        question: currQuestion.question,
+        options: currQuestion.correctAnswer,
+        questionId: currQuestion.questionId,
+        chosenOptions: selectOptions,
+      },
+    ]);
+    setSelectOptions([]);
+    handleIndex();
+  };
+  console.log(submitData);
+
   return (
     <div className="flex-1 flex flex-col gap-14 max-w-3xl bg-white shadow-md p-10 rounded-3xl">
       {/* Timer Wrapper & Tracker */}
@@ -59,7 +87,7 @@ const QuestionComp = () => {
             </h1> */}
           </div>
           {/* Options */}
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center h-11 gap-4">
             {currQuestion.options?.map(
               (option, index) =>
                 !selectOptions.includes(option) && (
@@ -83,9 +111,13 @@ const QuestionComp = () => {
         <Button
           variant="outline"
           className="border-gray-3 text-p2 text-gray-3 self-end"
-          disabled={currIndex === 9}
+          disabled={
+            currIndex === 9 ||
+            selectOptions.length !== currQuestion.options.length
+          }
           width={"fit-content"}
-          onClick={() => handleIndex()}
+          // onClick={() => handleIndex()}
+          onClick={handleNext}
           height={64}
         >
           Next

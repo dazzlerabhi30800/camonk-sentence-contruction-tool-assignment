@@ -22,14 +22,18 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
   // Split template on underscores, preserving them
   const parts = template.split(blankRegex).flatMap((part, index) => {
     // After each text part (except the last), insert a blank or word
-    const result = [<span key={`text-${index}`}>{part}</span>];
+    const result = [
+      <span className="leading-[2.1]" key={`text-${index}`}>
+        {part}
+      </span>,
+    ];
     if (index < optionLength) {
       const word = selectedWords[index];
       result.push(
-        <p
+        <span
           key={`blank-${index}`}
           className={twMerge(
-            "mx-2",
+            "mx-2 leading-[2.1]",
             word
               ? "border-b-2 border-gray-2 pb-2 font-semibold px-2"
               : "text-gray-400"
@@ -46,19 +50,16 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
               {word}
             </Button>
           ) : (
-            <span>______________</span>
+            <span>___________</span>
           )}
-        </p>
+        </span>
       );
     }
+    // console.log(result);
     return result;
   });
 
-  return (
-    <div className={twMerge("text-lg gap-y-3 flex flex-wrap", className)}>
-      {parts}
-    </div>
-  );
+  return <div className={twMerge("text-lg", className)}>{parts}</div>;
 };
 
 export default SentenceDisplay;
