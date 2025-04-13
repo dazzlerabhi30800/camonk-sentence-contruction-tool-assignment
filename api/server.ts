@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import path from "path";
 import { fileURLToPath } from "url";
+import path from "path";
 import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -10,21 +10,20 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ): Promise<void> {
-  // const headers: Record<string, string> = {
-  //   'Access-Control-Allow-Origin': '*',
-  //   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  //   'Access-Control-Allow-Headers': 'Content-Type',
-  // };
-
   try {
     if (req.method === "OPTIONS") {
       res.status(200).setHeader("Access-Control-Allow-Origin", "*").end();
       return;
     }
 
-    const dbPath = path.resolve(__dirname, "./db.json");
+    const dbPath = path.resolve(__dirname, "db.json");
+    console.log("Attempting to access db.json at:", dbPath);
     if (!fs.existsSync(dbPath)) {
-      res.status(500).json({ error: "db.json not found" });
+      res.status(500).json({
+        error: "db.json not found",
+        path: dbPath,
+        dir: fs.readdirSync(__dirname),
+      });
       return;
     }
 
@@ -41,7 +40,7 @@ export default async function handler(
       return;
     }
   } catch (error: unknown) {
-    console.error("Error:", error);
+    console.error("Function error:", error);
     res
       .status(500)
       .json({ error: "Internal server error", details: String(error) });
