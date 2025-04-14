@@ -22,9 +22,9 @@ const Details = () => {
     },
   ];
   return (
-    <div className="flex items-center gap-10 md:gap-16">
+    <div className="flex items-center gap-7 sm:gap-10 md:gap-16">
       {detailData?.map(({ title, text }, index) => (
-        <div className="flex items-center gap-5 md:gap-8" key={index}>
+        <div className="flex items-center gap-4 sm:gap-5 md:gap-8" key={index}>
           <div className="flex flex-col items-center font-medium text-center gap-4">
             <p className="text-black-1 text-sm md:text-p1">{title}</p>
             {text}

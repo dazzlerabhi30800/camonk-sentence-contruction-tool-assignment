@@ -16,11 +16,8 @@ const QuestionComp = () => {
     questions,
     loading,
   } = useStoreContext();
-  const [selectOptions, setSelectOptions] = useState<string[]>([]);
+  const [selectOptions, setSelectOptions] = useState<Array<string>>([]);
   const [time, setTime] = useState(30);
-  const handleBlank = (option: string) => {
-    setSelectOptions((prev) => prev.filter((item) => item !== option));
-  };
 
   const checkArray = (arr1: string[], arr2: string[]) => {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
@@ -72,6 +69,27 @@ const QuestionComp = () => {
     };
   }, [time]);
 
+  const handleOption = (option: string, index: number) => {
+    const options = [...selectOptions];
+    const currOpt = options[index];
+    if (currOpt === "null") {
+      console.log("hello");
+      options[index] = option;
+      setSelectOptions([...options]);
+    } else {
+      setSelectOptions((prev) => [...prev, option]);
+    }
+  };
+
+  const handleBlank = (option: string) => {
+    const options = [...selectOptions];
+    const findIndex = options.findIndex((item) => item === option);
+    if (findIndex < 0) return;
+    options[findIndex] = "null";
+    setSelectOptions([...options]);
+    // setSelectOptions((prev) => prev.filter((item) => item !== option));
+  };
+
   if (!currQuestion) return;
   return (
     <div className="flex-1 flex flex-col gap-14 w-full max-w-3xl bg-transparent md:bg-white md:shadow-md p-5 md:p-10 rounded-3xl min-h-[600px]">
@@ -82,6 +100,11 @@ const QuestionComp = () => {
           <p className="text-gray-4 font-semibold text-p">{formatTime(time)}</p>
           <Link
             to={"/results"}
+            onClick={(e) => {
+              e.preventDefault();
+              setIndex(0);
+              navigate("/");
+            }}
             className="text-gray-1 border text-center py-2 px-3 rounded-lg shadow-sm hover:opacity-70 text-p2 border-gray-3 "
           >
             Quit
@@ -118,7 +141,7 @@ const QuestionComp = () => {
             />
           </div>
           {/* Options */}
-          <div className="flex flex-wrap justify-center h-11 gap-4">
+          <div className="flex flex-wrap justify-center min-h-11 h-max gap-4">
             {currQuestion?.options?.map(
               (option, index) =>
                 !selectOptions.includes(option) && (
@@ -126,9 +149,7 @@ const QuestionComp = () => {
                     key={index}
                     variant="outline"
                     className="border-gray-5 text-[10px] h-fit w-fit md:h-auto md:w-auto md:text-p3 text-gray-1 w-fit h-[38px]"
-                    onClick={() =>
-                      setSelectOptions((prev) => [...prev, option])
-                    }
+                    onClick={() => handleOption(option, index)}
                   >
                     {option}
                   </Button>
@@ -139,12 +160,14 @@ const QuestionComp = () => {
         {/* Next Button */}
         <Button
           variant="outline"
-          className="border-gray-2 text-p2 mt-5 md:mt-0 textg-gray-2 self-end h-16 w-fit"
-          disabled={selectOptions.length !== currQuestion?.options.length}
-          // onClick={() => handleIndex()}
+          className="disabled:border-gray-2 text-p2 mt-5 md:mt-0 disabled:text-gray-2 disabled:bg-transparent self-end px-5 h-16 w-fit bg-primary-blue text-white border-transparent"
+          disabled={
+            selectOptions.length !== currQuestion?.options.length ||
+            selectOptions.some((item) => item === "null")
+          }
           onClick={handleNext}
         >
-          Next
+          <i className="bi bi-arrow-right"></i>
         </Button>
       </div>
     </div>

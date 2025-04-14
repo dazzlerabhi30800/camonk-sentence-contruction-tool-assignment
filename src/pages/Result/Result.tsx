@@ -1,12 +1,21 @@
 import Remarks from "./Remarks";
 import ReviewAnswerWrapper from "./ReviewAnswerWrapper";
+import { useStoreContext } from "../../lib/Store";
+import Spinner from "../../components/Spinner";
 
 const Result = () => {
+  const { loading } = useStoreContext();
   return (
-    <main className="flex flex-col items-center pt-20 md:pt-38 pb-10">
-      <Remarks />
-      <ReviewAnswerWrapper />
-    </main>
+    <div className="flex  flex-1 flex-col items-center">
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="flex flex-col items-center py-20">
+          <Remarks />
+          <ReviewAnswerWrapper />
+        </div>
+      )}
+    </div>
   );
 };
 

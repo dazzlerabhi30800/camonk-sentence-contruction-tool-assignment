@@ -1,18 +1,13 @@
 import QuestionComp from "../../components/QuestionComp";
+import Spinner from "../../components/Spinner";
 import { useStoreContext } from "../../lib/Store";
 
 const Questions = () => {
   const { currQuestion, loading } = useStoreContext();
   return (
-    <main className="flex items-center justify-center">
-      {!currQuestion && loading ? (
-        <div className="text-3xl animate-spin w-fit">
-          <i className="bi  bi-arrow-clockwise"></i>
-        </div>
-      ) : (
-        <QuestionComp />
-      )}
-    </main>
+    <div className="flex flex-1 items-center justify-center">
+      {!currQuestion && loading ? <Spinner /> : <QuestionComp />}
+    </div>
   );
 };
 

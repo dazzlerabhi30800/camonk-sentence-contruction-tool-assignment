@@ -3,7 +3,7 @@ import Details from "./Details";
 
 const MainWrapper = () => {
   return (
-    <div className="flex-1 h-inherit w-full flex flex-col gap-[76px] justify-center items-center">
+    <div className="flex flex-col flex-1  gap-[76px] justify-center items-center">
       <div className="flex flex-col gap-8">
         <img
           src="/logo.svg"

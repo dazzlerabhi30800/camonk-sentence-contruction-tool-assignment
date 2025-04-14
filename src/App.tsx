@@ -19,10 +19,8 @@ function App() {
       .then((data) => data.json())
       .then((res) => {
         setQuestions(res.questions);
-        setTimeout(() => {
-          setCurrQuestion(res.questions[index]);
-          setLoading(false);
-        }, 1000);
+        setCurrQuestion(res.questions[index]);
+        setLoading(false);
       });
   };
 
@@ -30,20 +28,22 @@ function App() {
     handleFetchQuesions();
   }, []);
 
-  // const url = window.origin + "/api/db.json";
-  // useEffect(() => {
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // }, []);
+  useEffect(() => {
+    const url = window.origin + "/api/db.json";
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/questions" element={<Questions />} />
-        <Route path="/results" element={<Result />} />
-      </Routes>
+      <main className="flex flex-col">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/questions" element={<Questions />} />
+          <Route path="/results" element={<Result />} />
+        </Routes>
+      </main>
     </>
   );
 }

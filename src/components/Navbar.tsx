@@ -4,7 +4,7 @@ const Navbar = () => {
   const location = useLocation();
   return (
     <nav
-      className={`fixed top-0 left-0 w-full flex justify-center z-10 items-center py-[18px] bg-white shadow-md text-gray-1 ${
+      className={`relative w-full flex justify-center z-10 items-center py-[18px] bg-white shadow-md text-gray-1 ${
         location.pathname === "/questions" && "hidden"
       }`}
     >

@@ -4,8 +4,9 @@ import { useStoreContext } from "../../lib/Store";
 import { useEffect, useState } from "react";
 
 const Remarks = () => {
+  const circumference = 2 * Math.PI * 100;
   const { questions, submitData } = useStoreContext();
-  const [scorePercent, setScorePercent] = useState(2 * Math.PI * 100);
+  const [scorePercent, setScorePercent] = useState(circumference);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(0);
   useEffect(() => {
@@ -16,7 +17,6 @@ const Remarks = () => {
     setLoading(true);
     const submitted = submitData.filter((data) => data.isCorrect);
     const totalLength = questions.length;
-    const circumference = 2 * Math.PI * 100;
     const score = Math.floor((submitted.length / totalLength) * 100);
     const strokePct =
       (((totalLength - submitted.length) / 10) * 100 * circumference) / 100;
@@ -37,13 +37,17 @@ const Remarks = () => {
               <stop offset="10%" stopColor="#317F39" />
               <stop offset="70%" stopColor="#317F39" />
             </linearGradient>
+            <linearGradient id="GradientColor2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="10%" stopColor="#f1f1f1" />
+              <stop offset="70%" stopColor="#f1f1f1" />
+            </linearGradient>
             <circle
               cx="150"
               cy="150"
               r="100"
               id="circle--skeleton"
-              strokeDasharray={2 * Math.PI * 100}
-              strokeDashoffset={scorePercent}
+              strokeDasharray={circumference}
+              strokeDashoffset={score >= 10 ? circumference : 0}
               strokeLinecap="round"
             />
             <circle
@@ -51,7 +55,7 @@ const Remarks = () => {
               cy="150"
               r="100"
               id="circle--progress"
-              strokeDasharray={2 * Math.PI * 100}
+              strokeDasharray={circumference}
               strokeDashoffset={scorePercent}
               strokeLinecap="round"
             />

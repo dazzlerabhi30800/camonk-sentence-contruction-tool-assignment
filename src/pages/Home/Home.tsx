@@ -2,9 +2,9 @@ import MainWrapper from "./MainWrapper";
 
 const Home = () => {
   return (
-    <main className="flex flex-col">
+    <div className="flex flex-1 flex-col">
       <MainWrapper />
-    </main>
+    </div>
   );
 };
 
