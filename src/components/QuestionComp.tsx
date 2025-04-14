@@ -69,25 +69,12 @@ const QuestionComp = () => {
     };
   }, [time]);
 
-  const handleOption = (option: string, index: number) => {
-    const options = [...selectOptions];
-    const currOpt = options[index];
-    if (currOpt === "null") {
-      console.log("hello");
-      options[index] = option;
-      setSelectOptions([...options]);
-    } else {
-      setSelectOptions((prev) => [...prev, option]);
-    }
+  const handleOption = (option: string) => {
+    setSelectOptions((prev) => [...prev, option]);
   };
 
   const handleBlank = (option: string) => {
-    const options = [...selectOptions];
-    const findIndex = options.findIndex((item) => item === option);
-    if (findIndex < 0) return;
-    options[findIndex] = "null";
-    setSelectOptions([...options]);
-    // setSelectOptions((prev) => prev.filter((item) => item !== option));
+    setSelectOptions((prev) => prev.filter((item) => item !== option));
   };
 
   if (!currQuestion) return;
@@ -149,7 +136,7 @@ const QuestionComp = () => {
                     key={index}
                     variant="outline"
                     className="border-gray-5 text-[10px] h-fit w-fit md:h-auto md:w-auto md:text-p3 text-gray-1 w-fit h-[38px]"
-                    onClick={() => handleOption(option, index)}
+                    onClick={() => handleOption(option)}
                   >
                     {option}
                   </Button>
@@ -161,10 +148,7 @@ const QuestionComp = () => {
         <Button
           variant="outline"
           className="disabled:border-gray-2 text-p2 mt-5 md:mt-0 disabled:text-gray-2 disabled:bg-transparent self-end px-5 h-16 w-fit bg-primary-blue text-white border-transparent"
-          disabled={
-            selectOptions.length !== currQuestion?.options.length ||
-            selectOptions.some((item) => item === "null")
-          }
+          disabled={selectOptions.length !== currQuestion?.options.length}
           onClick={handleNext}
         >
           <i className="bi bi-arrow-right"></i>
