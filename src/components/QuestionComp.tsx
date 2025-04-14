@@ -3,7 +3,7 @@ import { useStoreContext } from "../lib/Store";
 import Button from "./Button";
 import SentenceDisplay from "./SentenceDisplay";
 import { formatTime } from "../utils/formatTime";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const QuestionComp = () => {
   const {
@@ -12,6 +12,7 @@ const QuestionComp = () => {
     handleIndex,
     setSubmitData,
     setCurrQuestion,
+    setIndex,
     questions,
   } = useStoreContext();
   const [selectOptions, setSelectOptions] = useState<string[]>([]);
@@ -31,7 +32,7 @@ const QuestionComp = () => {
       return;
     }
     if (currIndex > 0) {
-      setTime(10);
+      setTime(30);
     }
     setCurrQuestion(questions[currIndex]);
   }, [currIndex]);
@@ -49,6 +50,11 @@ const QuestionComp = () => {
       },
     ]);
     setSelectOptions([]);
+    if (currIndex === questions.length - 1) {
+      navigate("/results");
+      setIndex(0);
+      return;
+    }
     handleIndex();
   };
 
@@ -69,18 +75,18 @@ const QuestionComp = () => {
   }, [time]);
 
   return (
-    <div className="flex-1 flex flex-col gap-14 w-full max-w-3xl bg-transparent   md:bg-white md:shadow-md p-5 md:p-10 rounded-3xl">
+    <div className="flex-1 flex flex-col gap-14 w-full max-w-3xl bg-transparent md:bg-white md:shadow-md p-5 md:p-10 rounded-3xl min-h-[600px]">
       {/* Timer Wrapper & Tracker */}
       <div className="flex flex-col gap-8">
         {/* Time & Quit Button */}
         <div className="flex items-center justify-between">
           <p className="text-gray-4 font-semibold text-p">{formatTime(time)}</p>
-          <Button
-            className="text-gray-1 text-p2 border-gray-3 w-[76px] h-11"
-            variant="outline"
+          <Link
+            to={"/results"}
+            className="text-gray-1 border text-center py-2 px-3 rounded-lg shadow-sm hover:opacity-70 text-p2 border-gray-3 "
           >
             Quit
-          </Button>
+          </Link>
         </div>
         {/* Questions Tracker */}
         <div className="flex gap-2">
@@ -134,11 +140,8 @@ const QuestionComp = () => {
         {/* Next Button */}
         <Button
           variant="outline"
-          className="border-gray-2 md:border-gray-3 text-p2 mt-5 md:mt-0 textg-gray-2 md:text-gray-3 self-end h-16 w-fit"
-          disabled={
-            currIndex === 9 ||
-            selectOptions.length !== currQuestion.options.length
-          }
+          className="border-gray-2 text-p2 mt-5 md:mt-0 textg-gray-2 self-end h-16 w-fit"
+          disabled={selectOptions.length !== currQuestion.options.length}
           // onClick={() => handleIndex()}
           onClick={handleNext}
         >

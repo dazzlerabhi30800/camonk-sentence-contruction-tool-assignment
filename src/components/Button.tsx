@@ -19,7 +19,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={twMerge(
-        "px-4 py-2 rounded border-1 hover:opacity-70 transition duration-300 linear disabled:cursor-not-allowed disabled:opacity-90",
+        "px-4 py-2 rounded border-1 hover:opacity-70 transition duration-300 linear disabled:cursor-not-allowed disabled:opacity-40",
         variant === "outline"
           ? " text-primary-blue border-primary-blue bg-transparent"
           : "text-white  border-transparent bg-primary-blue",

@@ -3,7 +3,7 @@ import ReviewAnswerWrapper from "./ReviewAnswerWrapper";
 
 const Result = () => {
   return (
-    <main className="flex flex-col items-center pt-38 pb-10">
+    <main className="flex flex-col items-center pt-20 md:pt-38 pb-10">
       <Remarks />
       <ReviewAnswerWrapper />
     </main>
