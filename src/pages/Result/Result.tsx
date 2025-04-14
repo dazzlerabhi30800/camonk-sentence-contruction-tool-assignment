@@ -10,7 +10,7 @@ const Result = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-col items-center py-20">
+        <div className="flex flex-col items-center pt-20 pb-10 md:pb-20">
           <Remarks />
           <ReviewAnswerWrapper />
         </div>

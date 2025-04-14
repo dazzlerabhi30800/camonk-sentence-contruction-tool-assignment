@@ -89,8 +89,8 @@ const QuestionComp = () => {
             to={"/results"}
             onClick={(e) => {
               e.preventDefault();
-              setIndex(0);
               navigate("/results");
+              setIndex(0);
             }}
             className="text-gray-1 border text-center py-2 px-3 rounded-lg shadow-sm hover:opacity-70 text-p2 border-gray-3 "
           >
@@ -140,7 +140,7 @@ const QuestionComp = () => {
                   >
                     {option}
                   </Button>
-                ),
+                )
             )}
           </div>
         </div>
