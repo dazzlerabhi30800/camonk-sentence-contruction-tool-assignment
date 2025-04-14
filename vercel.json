@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/json/:match*",
-            "destination": "/api/server.ts"
+            "source": "/(.*)",
+            "destination": "/"
         }
     ]
 }
