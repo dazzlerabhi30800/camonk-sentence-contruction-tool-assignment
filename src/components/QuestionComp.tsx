@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStoreContext } from "../lib/Store";
 import Button from "./Button";
 import SentenceDisplay from "./SentenceDisplay";
@@ -14,6 +14,7 @@ const QuestionComp = () => {
     setCurrQuestion,
     setIndex,
     questions,
+    loading,
   } = useStoreContext();
   const [selectOptions, setSelectOptions] = useState<string[]>([]);
   const [time, setTime] = useState(30);
@@ -27,18 +28,15 @@ const QuestionComp = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (currIndex >= questions.length) {
-      navigate("/");
-      return;
-    }
     if (currIndex > 0) {
       setTime(30);
     }
     setCurrQuestion(questions[currIndex]);
-  }, [currIndex]);
+  }, [currIndex, loading]);
 
   const handleNext = () => {
-    const isCorrect = checkArray(currQuestion.correctAnswer, selectOptions);
+    if (!currQuestion) return;
+    const isCorrect = checkArray(currQuestion?.correctAnswer, selectOptions);
     setSubmitData((prev) => [
       ...prev,
       {
@@ -74,6 +72,7 @@ const QuestionComp = () => {
     };
   }, [time]);
 
+  if (!currQuestion) return;
   return (
     <div className="flex-1 flex flex-col gap-14 w-full max-w-3xl bg-transparent md:bg-white md:shadow-md p-5 md:p-10 rounded-3xl min-h-[600px]">
       {/* Timer Wrapper & Tracker */}
@@ -113,14 +112,14 @@ const QuestionComp = () => {
             </p>
             <SentenceDisplay
               selectedWords={selectOptions}
-              template={currQuestion.question}
+              template={currQuestion?.question}
               handleBlank={handleBlank}
-              optionLength={currQuestion.options.length}
+              optionLength={currQuestion?.options.length}
             />
           </div>
           {/* Options */}
           <div className="flex flex-wrap justify-center h-11 gap-4">
-            {currQuestion.options?.map(
+            {currQuestion?.options?.map(
               (option, index) =>
                 !selectOptions.includes(option) && (
                   <Button
@@ -141,7 +140,7 @@ const QuestionComp = () => {
         <Button
           variant="outline"
           className="border-gray-2 text-p2 mt-5 md:mt-0 textg-gray-2 self-end h-16 w-fit"
-          disabled={selectOptions.length !== currQuestion.options.length}
+          disabled={selectOptions.length !== currQuestion?.options.length}
           // onClick={() => handleIndex()}
           onClick={handleNext}
         >

@@ -5,15 +5,31 @@ import { Routes, Route } from "react-router-dom";
 import Questions from "./pages/Questions/Questions";
 import Navbar from "./components/Navbar";
 import Result from "./pages/Result/Result";
-// import { useEffect } from "react";
+import { useEffect } from "react";
+import { useStoreContext } from "./lib/Store";
 
 function App() {
-  // const api_url = import.meta.env.VITE_API_URL || "/api";
-  // useEffect(() => {
-  //   fetch(api_url + "/data")
-  //     .then((data) => data.json())
-  //     .then((res) => console.log(res));
-  // }, []);
+  const api_url = import.meta.env.VITE_API_URL || "/api";
+  const { setQuestions, setCurrQuestion, index, setLoading } =
+    useStoreContext();
+
+  const handleFetchQuesions = () => {
+    setLoading(true);
+    fetch(api_url)
+      .then((data) => data.json())
+      .then((res) => {
+        setQuestions(res.questions);
+        setTimeout(() => {
+          setCurrQuestion(res.questions[index]);
+          setLoading(false);
+        }, 1000);
+      });
+  };
+
+  useEffect(() => {
+    handleFetchQuesions();
+  }, []);
+
   // const url = window.origin + "/api/db.json";
   // useEffect(() => {
   //   fetch(url)

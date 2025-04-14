@@ -1,15 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import db from "../../api/db.json";
 
 interface context {
   index: number;
   setIndex: React.Dispatch<React.SetStateAction<number>>;
-  currQuestion: question;
-  setCurrQuestion: React.Dispatch<React.SetStateAction<question>>;
+  currQuestion: question | undefined;
+  setCurrQuestion: React.Dispatch<React.SetStateAction<question | undefined>>;
   submitData: submit[];
   setSubmitData: React.Dispatch<React.SetStateAction<Array<submit>>>;
   handleIndex: () => void;
   questions: question[];
+  setQuestions: React.Dispatch<React.SetStateAction<Array<question>>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const StoreContext = createContext<context | null>(null);
@@ -19,15 +21,13 @@ export default function StoreContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const {
-    data: { questions },
-  } = db;
+  const [questions, setQuestions] = useState<question[]>([]);
   const [index, setIndex] = useState(0);
-  const [currQuestion, setCurrQuestion] = useState(questions[index]);
+  const [currQuestion, setCurrQuestion] = useState<question | undefined>();
   const [submitData, setSubmitData] = useState<submit[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleIndex = () => {
-    // setIndex((prev) => Math.floor((prev + 1) % questions.length));
     setIndex((prev) => prev + 1);
   };
 
@@ -42,6 +42,9 @@ export default function StoreContextProvider({
         submitData,
         setSubmitData,
         questions,
+        setQuestions,
+        loading,
+        setLoading,
       }}
     >
       {children}
