@@ -13,7 +13,7 @@ function App() {
   const { setQuestions, setCurrQuestion, index, setLoading } =
     useStoreContext();
 
-  const handleFetchQuesions = () => {
+  const handleFetchQuestions = () => {
     setLoading(true);
     fetch(api_url)
       .then((data) => data.json())
@@ -24,16 +24,26 @@ function App() {
       });
   };
 
-  useEffect(() => {
-    handleFetchQuesions();
-  }, []);
+  const handleFetchQuestionsProd = () => {
+    setLoading(true);
+    fetch(api_url)
+      .then((data) => data.json())
+      .then((res) => {
+        const questionsArr = res?.data?.questions;
+        setQuestions(questionsArr);
+        setCurrQuestion(questionsArr[index]);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
-    const url = window.origin + "/api/db.json";
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    if (import.meta.env.VITE_PROCESS === "development") {
+      handleFetchQuestions();
+    } else {
+      handleFetchQuestionsProd();
+    }
   }, []);
+
   return (
     <>
       <main className="flex flex-col">
