@@ -34,7 +34,6 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
           key={`blank-${index}`}
           className={twMerge(
             "inline-block mx-1 leading-[2.8] md:leading-[2.1] min-w-20 pb-1 md:pb-0 border-b-2 border-gray-2  font-semibold"
-            // word && word !== "null" ? "-translate-y-3" : "translate-y-0"
           )}
         >
           {word && word !== "null" && (
@@ -46,13 +45,9 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
               {word}
             </Button>
           )}
-          {/* //  : (
-          //   <span>___________</span>
-          // )} */}
         </span>
       );
     }
-    // console.log(result);
     return result;
   });
 
