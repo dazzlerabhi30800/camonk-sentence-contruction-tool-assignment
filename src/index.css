@@ -57,6 +57,6 @@ main {
   stroke: url(#GradientColor2);
   stroke-width: 10px;
   filter: drop-shadow(0px 0px 10px rgba(68, 68, 68, 0.185));
-  transition: 0.5s linear;
+  transition: none;
   /* filter: drop-shadow(0px 0px 5px rgba(235, 32, 32, 0.738)); */
 }

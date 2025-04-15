@@ -6,6 +6,7 @@ const Questions = () => {
   const { currQuestion, loading } = useStoreContext();
   return (
     <div className="flex flex-1 items-center justify-center">
+      {/* show Loader on loading & currQuestion is null */}
       {!currQuestion && loading ? <Spinner /> : <QuestionComp />}
     </div>
   );

@@ -13,6 +13,7 @@ function App() {
   const { setQuestions, setCurrQuestion, index, setLoading } =
     useStoreContext();
 
+  // this will fetch the question data on development using json-server
   const handleFetchQuestions = () => {
     setLoading(true);
     fetch(api_url)
@@ -24,6 +25,7 @@ function App() {
       });
   };
 
+  // this will fetch the question data on production.
   const handleFetchQuestionsProd = () => {
     setLoading(true);
     fetch(api_url)

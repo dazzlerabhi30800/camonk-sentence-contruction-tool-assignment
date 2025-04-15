@@ -5,12 +5,19 @@ import { useEffect, useState } from "react";
 
 const Remarks = () => {
   const circumference = 2 * Math.PI * 100;
-  const { questions, submitData } = useStoreContext();
+  const { questions, submitData, setSubmitData } = useStoreContext();
+  // this is for the svg stroke dasharray.
   const [scorePercent, setScorePercent] = useState(circumference);
   const [loading, setLoading] = useState(false);
+  // this is for the actual score to display.
   const [score, setScore] = useState(0);
   useEffect(() => {
     calculateScore();
+    return () => {
+      setScore(0);
+      setScorePercent(circumference);
+      setSubmitData([]);
+    };
   }, []);
 
   const calculateScore = () => {
@@ -19,7 +26,8 @@ const Remarks = () => {
     const totalLength = questions.length;
     const score = Math.floor((submitted.length / totalLength) * 100);
     const strokePct =
-      (((totalLength - submitted.length) / 10) * 100 * circumference) / 100;
+      // (((totalLength - submitted.length) / 10) * 100 * circumference) / 100;
+      ((totalLength - submitted.length) / 10) * circumference;
     setScorePercent(strokePct);
     setScore(score);
     setLoading(false);

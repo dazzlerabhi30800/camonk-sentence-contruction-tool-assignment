@@ -9,21 +9,24 @@ const QuestionComp = () => {
   const {
     index: currIndex,
     currQuestion,
+    questions,
+    loading,
     handleIndex,
     setSubmitData,
     setCurrQuestion,
     setIndex,
-    questions,
-    loading,
   } = useStoreContext();
   const [selectOptions, setSelectOptions] = useState<Array<string>>([]);
   const [time, setTime] = useState(30);
 
+  // check if the selectedOptions === correctAnswer options
   const checkArray = (arr1: string[], arr2: string[]) => {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
   };
 
   const navigate = useNavigate();
+
+  // this will run every time currIndex changes & reset the time when the question changes.
   useEffect(() => {
     if (currIndex > 0) {
       setTime(30);
@@ -31,6 +34,7 @@ const QuestionComp = () => {
     setCurrQuestion(questions[currIndex]);
   }, [currIndex, loading]);
 
+  // change the current index & add the current submitted anwers in submitData arr;
   const handleNext = () => {
     if (!currQuestion) return;
     const isCorrect = checkArray(currQuestion?.correctAnswer, selectOptions);
@@ -45,6 +49,7 @@ const QuestionComp = () => {
       },
     ]);
     setSelectOptions([]);
+    // if we get to the last question & hit next button submit & redirect to results page.
     if (currIndex === questions.length - 1) {
       navigate("/results");
       setIndex(0);
@@ -56,6 +61,7 @@ const QuestionComp = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       let currTime = time;
+      // if the time is over, show the next question;
       if (currTime <= 0) {
         clearInterval(interval);
         handleNext();
@@ -69,10 +75,12 @@ const QuestionComp = () => {
     };
   }, [time]);
 
+  // push the option on selecting them in the selectedOptions array.
   const handleOption = (option: string) => {
     setSelectOptions((prev) => [...prev, option]);
   };
 
+  // when clicking on the blank with chosen option it should remove that option from the selected array.
   const handleBlank = (option: string) => {
     setSelectOptions((prev) => prev.filter((item) => item !== option));
   };
@@ -99,7 +107,7 @@ const QuestionComp = () => {
         </div>
         {/* Questions Tracker */}
         <div className="flex gap-2">
-          {Array(10)
+          {Array(questions.length)
             .fill(0)
             .map((_, index) => (
               <span
