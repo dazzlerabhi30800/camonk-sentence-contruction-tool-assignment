@@ -78,6 +78,8 @@ const Remarks = () => {
             ? "..."
             : score < 30
             ? "You have done very poor, please improve your grammer"
+            : score === 100
+            ? "Wow you have really rocked the world with your knowledge in english grammer, your command in this language is quite astonishing"
             : " While you correctly formed several sentences, there are a couple of areas where improvement is needed. Pay close attention to sentence structure and word placement to ensure clarity and correctness. Review your responses below for more details. "}
         </p>
       </div>
