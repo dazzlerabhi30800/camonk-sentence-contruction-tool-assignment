@@ -33,7 +33,7 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
         <span
           key={`blank-${index}`}
           className={twMerge(
-            "inline-block mx-2 leading-[2.8] md:leading-[2.1] min-w-24 pb-1 md:pb-0 border-b-2 border-gray-2  font-semibold"
+            "inline-block mx-1 leading-[2.8] md:leading-[2.1] min-w-20 pb-1 md:pb-0 border-b-2 border-gray-2  font-semibold"
             // word && word !== "null" ? "-translate-y-3" : "translate-y-0"
           )}
         >
@@ -41,7 +41,7 @@ const SentenceDisplay: React.FC<SentenceDisplayProps> = ({
             <Button
               variant="outline"
               onClick={() => handleBlank(word)}
-              className="text-xs border-gray-5 p-1 text-gray-1 h-fit w-full"
+              className="text-xs border-gray-5 py-1 text-gray-1 h-fit w-full"
             >
               {word}
             </Button>
