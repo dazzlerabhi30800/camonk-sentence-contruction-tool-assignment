@@ -79,6 +79,7 @@ const QuestionComp = () => {
 
   // push the option on selecting them in the selectedOptions array.
   const handleOption = (option: string) => {
+    // first check if there are marked items in array, if it is just update their index;
     const nullIndex = selectOptions.findIndex((item) => item === "null");
     console.log(nullIndex);
     if (nullIndex < 0) {
@@ -92,6 +93,7 @@ const QuestionComp = () => {
 
   // when clicking on the blank with chosen option it should remove that option from the selected array.
   const handleBlank = (option: string) => {
+    // this will mark the word we are deselecting as null;
     setSelectOptions((prev) =>
       prev.map((item) => {
         if (item === option) {
