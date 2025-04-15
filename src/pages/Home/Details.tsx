@@ -16,7 +16,7 @@ const Details = () => {
       text: (
         <p className="flex items-end gap-1 text-gray-1 text-xs md:text-p3">
           <span className="w-5 h-5 md:w-6 md:h-6 rounded-[50%] border-3 border-yellow-400 bg-yellow-500"></span>
-          0
+          30
         </p>
       ),
     },

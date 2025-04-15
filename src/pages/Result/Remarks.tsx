@@ -22,10 +22,9 @@ const Remarks = () => {
 
   const calculateScore = () => {
     setLoading(true);
-    console.log(submitData);
     const submitted = submitData.filter((data) => data.isCorrect);
     const totalLength = questions.length;
-    const score = Math.floor((submitted.length / totalLength) * 100);
+    const score = Math.floor((submitted.length / totalLength) * 10);
     const strokePct =
       // (((totalLength - submitted.length) / 10) * 100 * circumference) / 100;
       ((totalLength - submitted.length) / 10) * circumference;

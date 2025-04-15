@@ -17,7 +17,9 @@ const QuestionComp = () => {
     setIndex,
   } = useStoreContext();
   const [selectOptions, setSelectOptions] = useState<Array<string>>([]);
-  const [time, setTime] = useState(30);
+  // interval time
+  const intervalTime = 30;
+  const [time, setTime] = useState(intervalTime);
 
   // check if the selectedOptions === correctAnswer options
   const checkArray = (arr1: string[], arr2: string[]) => {
@@ -29,7 +31,7 @@ const QuestionComp = () => {
   // this will run every time currIndex changes & reset the time when the question changes.
   useEffect(() => {
     if (currIndex > 0) {
-      setTime(30);
+      setTime(intervalTime);
     }
     setCurrQuestion(questions[currIndex]);
   }, [currIndex, loading]);
@@ -77,12 +79,28 @@ const QuestionComp = () => {
 
   // push the option on selecting them in the selectedOptions array.
   const handleOption = (option: string) => {
-    setSelectOptions((prev) => [...prev, option]);
+    const nullIndex = selectOptions.findIndex((item) => item === "null");
+    console.log(nullIndex);
+    if (nullIndex < 0) {
+      setSelectOptions((prev) => [...prev, option]);
+    } else {
+      const options = [...selectOptions];
+      options[nullIndex] = option;
+      setSelectOptions(options);
+    }
   };
 
   // when clicking on the blank with chosen option it should remove that option from the selected array.
   const handleBlank = (option: string) => {
-    setSelectOptions((prev) => prev.filter((item) => item !== option));
+    setSelectOptions((prev) =>
+      prev.map((item) => {
+        if (item === option) {
+          return "null";
+        }
+        return item;
+      })
+    );
+    // setSelectOptions((prev) => prev.filter((item) => item !== option));
   };
 
   if (!currQuestion) return;
