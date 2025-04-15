@@ -55,7 +55,7 @@ const Remarks = () => {
               r="100"
               id="circle--skeleton"
               strokeDasharray={circumference}
-              strokeDashoffset={score >= 10 ? circumference : 0}
+              strokeDashoffset={score >= 1 ? circumference : 0}
               strokeLinecap="round"
             />
             <circle
