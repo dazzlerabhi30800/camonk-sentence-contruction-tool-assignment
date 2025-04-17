@@ -9,7 +9,7 @@ interface scoreProps {
 const ScoreQuestionComp = ({ item, index }: scoreProps) => {
   const { submitData } = useStoreContext();
   const submitted = submitData.find(
-    (data) => data.questionId === item.questionId
+    (data) => data.questionId === item.questionId,
   );
   return (
     <div className="flex flex-col bg-white rounded-2xl shadow-md">

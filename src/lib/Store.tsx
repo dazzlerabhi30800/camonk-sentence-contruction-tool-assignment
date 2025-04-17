@@ -12,6 +12,7 @@ interface context {
   setQuestions: React.Dispatch<React.SetStateAction<Array<question>>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  resetState: () => void;
 }
 
 const StoreContext = createContext<context | null>(null);
@@ -31,6 +32,11 @@ export default function StoreContextProvider({
     setIndex((prev) => prev + 1);
   };
 
+  const resetState = () => {
+    setSubmitData([]);
+    setIndex(0);
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -45,6 +51,7 @@ export default function StoreContextProvider({
         setQuestions,
         loading,
         setLoading,
+        resetState,
       }}
     >
       {children}
@@ -56,7 +63,7 @@ export const useStoreContext = () => {
   const context = useContext(StoreContext);
   if (!context) {
     throw new Error(
-      "You haven't the wrapped the main comp within Store Context Provider"
+      "You haven't the wrapped the main comp within Store Context Provider",
     );
   }
   return context;

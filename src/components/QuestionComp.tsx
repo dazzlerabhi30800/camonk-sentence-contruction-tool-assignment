@@ -15,6 +15,7 @@ const QuestionComp = () => {
     setSubmitData,
     setCurrQuestion,
     setIndex,
+    submitData
   } = useStoreContext();
   const [selectOptions, setSelectOptions] = useState<Array<string>>([]);
   // interval time
@@ -81,7 +82,6 @@ const QuestionComp = () => {
   const handleOption = (option: string) => {
     // first check if there are marked items in array, if it is just update their index;
     const nullIndex = selectOptions.findIndex((item) => item === "null");
-    console.log(nullIndex);
     if (nullIndex < 0) {
       setSelectOptions((prev) => [...prev, option]);
     } else {
@@ -100,7 +100,7 @@ const QuestionComp = () => {
           return "null";
         }
         return item;
-      })
+      }),
     );
     // setSelectOptions((prev) => prev.filter((item) => item !== option));
   };
@@ -168,7 +168,7 @@ const QuestionComp = () => {
                   >
                     {option}
                   </Button>
-                )
+                ),
             )}
           </div>
         </div>
